@@ -3,109 +3,103 @@ declare(strict_types=1);
 
 namespace BSG\Clients;
 
-class ViberApiClient extends ApiClient {
+use Exception;
 
-    protected $messages = [];
-    protected $sender;
-    public function __construct($api_key, $sender, $source = null)
+class ViberApiClient extends ApiClient
+{
+    protected array $messages = [];
+    protected string $sender;
+
+    public function __construct(string $api_key, string $sender, ?string $source = null)
     {
         $this->sender = $sender;
         parent::__construct($api_key, $source);
     }
 
-    private function getStatus ($endpoint)
+    public function getStatusByReference(string $reference): array
     {
-        try {
-            $resp = $this->sendRequest($endpoint);
-        } catch (\Exception $e) {
-            $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
-            return ['error' => $error];
-        }
-        $result = json_decode($resp,true);
-        return $result;
+        return $this->getStatus('viber/reference/' . $reference);
     }
 
-    public function getStatusByReference ($reference)
+    public function getStatusById(int $message_id): array
     {
-        return $this->getStatus ('viber/reference/' . $reference);
+        return $this->getStatus('viber/' . $message_id);
     }
 
-    public function getStatusById ($message_id)
-    {
-        return $this->getStatus ('viber/' . $message_id);
-    }
-
-    public function getPrices ($tariff=NULL)
+    public function getPrices(?string $tariff = null): array
     {
         try {
             $resp = $this->sendRequest('viber/prices' . ($tariff !== NULL ? ('/' . $tariff) : ''));
-        } catch (\Exception $e) {
-            $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
-            return ['error' => $error];
+        } catch (Exception $e) {
+            return $this->getErrorFromException($e);
         }
-        $result = json_decode($resp,true);
-        return $result;
+
+        return json_decode($resp, true);
     }
 
-    public function clearMessages ()
+    public function clearMessages(): void
     {
         $this->messages = [];
     }
 
     /**
-     * param $to is an array of ['msisdn' => $msisdn, 'reference' => $reference], where 'reference' is optional
-     * @param $to
-     * @param $text
-     * @param $alpha_name
-     * @param array $viber_options
-     * @param bool $is_promotional
-     * @param string $callback_url
+     * Param $to is an array of ['msisdn' => $msisdn, 'reference' => $reference], where 'reference' is optional
      */
-    public function addMessage ($to, $text, $viber_options=[], $alpha_name = null, $is_promotional=true, $callback_url='')
+    public function addMessage(
+        array $to,
+        string $text, array $viber_options = [],
+        string $alpha_name = null,
+        bool $is_promotional = true,
+        string $callback_url = ''
+    ): void
     {
         $alpha_name = $alpha_name ?: $this->sender;
+
         $message = [];
+
         $message['to'] = $to;
         $message['text'] = $text;
         $message['alpha_name'] = $alpha_name;
+
         if (!$is_promotional)
             $message['is_promotional'] = $is_promotional;
+
         if ($callback_url != '')
             $message['callback_url'] = $callback_url;
+
         if (count($viber_options) > 0)
             $message['options']['viber'] = $viber_options;
+
         $this->messages[] = $message;
     }
 
-    public function getMessagesPrice ($validity=86400, $tariff=NULL)
+    public function getMessagesPrice(int $validity = 86400, ?string $tariff = null): array
     {
-        return $this->sendMessages ($validity, $tariff, true);
+        return $this->sendMessages($validity, $tariff, true);
     }
 
-    /**
-     * @param int $validity
-     * @param null $tariff
-     * @param bool $only_price
-     * @return mixed
-     */
-    public function sendMessages ($validity=86400, $tariff=NULL, $only_price=false)
+    public function sendMessages(int $validity = 86400, ?string $tariff = null, bool $only_price = false): array
     {
         if (count($this->messages) == 0)
             return ['error' => 'No messages to send'];
+
         $message = [];
+
         $message['validity'] = $validity;
+
         if ($tariff !== NULL)
             $message['tariff'] = $tariff;
-        $message['messages'] = $this->messages;
-        $endpoint = $only_price ? 'viber/price' : 'viber/create';
-        try {
-            $resp = $this->sendRequest($endpoint,json_encode($message),'PUT');
-        } catch (\Exception $e) {
-            $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
-            return ['error' => $error];
-        }
-        $result = json_decode($resp,true);
-        return $result;
-    }
 
+        $message['messages'] = $this->messages;
+
+        $endpoint = $only_price ? 'viber/price' : 'viber/create';
+
+        try {
+            $resp = $this->sendRequest($endpoint, json_encode($message), 'PUT');
+        } catch (Exception $e) {
+            return $this->getErrorFromException($e);
+        }
+
+        return json_decode($resp, true);
+    }
 }

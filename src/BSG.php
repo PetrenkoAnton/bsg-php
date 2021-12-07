@@ -9,13 +9,20 @@ use BSG\Clients\ViberApiClient;
 
 class BSG
 {
-    private $apiKey;
-    private $sender;
-    private $tariff;
-    private $viberSender;
-    private $apiSource;
+    private string $apiKey;
+    private ?string $sender;
+    private ?string $tariff;
+    private ?string $viberSender;
+    private ?string $apiSource;
 
-    public function __construct($apiKey, $sender = null, $viberSender = null, $tariff = null, $apiSource = null) {
+    public function __construct(
+        string $apiKey,
+        ?string $sender = null,
+        ?string $viberSender = null,
+        ?string $tariff = null,
+        ?string $apiSource = null
+    )
+    {
         $this->apiKey = $apiKey;
         $this->sender = $sender;
         $this->tariff = $tariff;
@@ -23,15 +30,18 @@ class BSG
         $this->apiSource = $apiSource;
     }
 
-    public function getSmsClient(): SmsApiClient {
+    public function getSmsClient(): SmsApiClient
+    {
         return new SmsApiClient($this->apiKey, $this->sender, $this->tariff, $this->apiSource);
     }
 
-    public function getHLRClient(): HLRApiClient {
+    public function getHLRClient(): HLRApiClient
+    {
         return new HLRApiClient($this->apiKey, $this->tariff, $this->apiSource);
     }
 
-    public function getViberClient(): ViberApiClient {
+    public function getViberClient(): ViberApiClient
+    {
         return new ViberApiClient($this->apiKey, $this->viberSender, $this->apiSource);
     }
 

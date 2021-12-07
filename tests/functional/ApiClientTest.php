@@ -4,18 +4,16 @@ declare(strict_types=1);
 namespace BSG\Tests\functional;
 
 use BSG\Clients\ApiClient;
-use BSG\Tests\TestConfig;
-use PHPUnit\Framework\TestCase;
+use Exception;
 
 class ApiClientTest extends TestCase
 {
-    const ERR_NO = 0;
-
-    private $apiClient;
+    private ApiClient $apiClient;
 
     public function setUp(): void
     {
-        $this->apiClient = new ApiClient(TestConfig::TEST_API_KEY);
+        parent::setUp();
+        $this->apiClient = new ApiClient($this->testApiKey);
     }
 
     /**
@@ -31,8 +29,8 @@ class ApiClientTest extends TestCase
             $this->assertArrayHasKey('currency', $answer);
             $this->assertArrayHasKey('limit', $answer);
             $this->assertEquals(self::ERR_NO, $answer['error']);
-        } catch (\Exception $e) {
-            $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
+        } catch (Exception $e) {
+            $this->failed($e);
         }
     }
 }
