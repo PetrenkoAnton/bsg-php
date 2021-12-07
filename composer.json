@@ -1,5 +1,32 @@
 {
+    "name": "bsg/php",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "composer/composer": "^2.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "vlucas/phpdotenv": "^2.5"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^5.7"
+        "mockery/mockery": "^1.3.1",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BSG\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BSG\\Tests\\": "tests/"
+        }
     }
 }
