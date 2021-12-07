@@ -47,7 +47,8 @@ class ViberApiClient extends ApiClient
      */
     public function addMessage(
         array $to,
-        string $text, array $viber_options = [],
+        string $text,
+        ?array $viber_options = null,
         string $alpha_name = null,
         bool $is_promotional = true,
         string $callback_url = ''
@@ -67,7 +68,7 @@ class ViberApiClient extends ApiClient
         if ($callback_url != '')
             $message['callback_url'] = $callback_url;
 
-        if (count($viber_options) > 0)
+        if (is_null($viber_options) || count($viber_options) > 0)
             $message['options']['viber'] = $viber_options;
 
         $this->messages[] = $message;

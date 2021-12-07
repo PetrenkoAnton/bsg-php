@@ -138,7 +138,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
-     * @group failed
+     * @group ok
      */
     public function sendUnregisteredSenderViberTest()
     {
@@ -221,7 +221,7 @@ class ViberApiClientTest extends TestCase
     public function sendWrongViberOptionsTest()
     {
         try {
-            $this->viberClient->addMessage([['msisdn' => TestConfig::TEST_PHONE_1]], 'test', 'wrong options');
+            $this->viberClient->addMessage([['msisdn' => TestConfig::TEST_PHONE_1]], 'test', null);
             $answer = $this->viberClient->sendMessages();
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_WRONG_VIBER_OPTIONS, $answer['result'][0]['error']);

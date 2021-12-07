@@ -52,7 +52,7 @@ class SmsApiClient extends ApiClient
 
     public function getPrice
     (
-        array $msisdn,
+        string $msisdn,
         string $originator,
         string $body,
         string $reference,
@@ -68,9 +68,10 @@ class SmsApiClient extends ApiClient
     public function sendSms
     (
         string $msisdn,
-        string $body, string $reference,
+        string $body,
+        ?string $reference = null,
         int $validity = 72,
-        ?string $tariff = null,
+        ?int $tariff = null,
         ?string $originator = null,
         bool $only_price = false
     ): array

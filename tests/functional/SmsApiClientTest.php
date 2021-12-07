@@ -123,7 +123,7 @@ class SmsApiClientTest extends TestCase
     public function sendNoExternalSmsTest()
     {
         try {
-            $answer = $this->smsClient->sendSms(TestConfig::TEST_PHONE_1, 'test', null);
+            $answer = $this->smsClient->sendSms(TestConfig::TEST_PHONE_1, 'test');
             $this->assertArrayHasKey('result', $answer);
             $this->assertArrayNotHasKey('price', $answer['result']);
             $this->assertArrayNotHasKey('currency', $answer['result']);
@@ -207,7 +207,7 @@ class SmsApiClientTest extends TestCase
     public function sendWrongValidationSmsTest()
     {
         try {
-            $answer = $this->smsClient->sendSms(TestConfig::TEST_PHONE_1, 'test', 'wv' . (string)time(), "wrong validation time");
+            $answer = $this->smsClient->sendSms(TestConfig::TEST_PHONE_1, 'test', 'wv' . (string)time(), -5);
             $this->assertArrayHasKey('result', $answer);
             $this->assertArrayHasKey('error', $answer['result']);
             $this->assertEquals(self::ERR_WRONG_LIFETIME, $answer['result']['error']);
@@ -241,22 +241,22 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
-     * @group failed
+     * @group ok
      */
     public function sendWrongStatusIdSmsTest()
     {
         try {
-            $answer = $this->smsClient->getTaskStatus('wrong status');
+            $answer = $this->smsClient->getTaskStatus(-5);
             $this->assertArrayHasKey('error', $answer);
             $this->assertEquals(self::ERR_WRONG_TASK_ID, $answer['error']);
         } catch (Exception $e) {
-            $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
+            $this->failed($e);
         }
     }
 
     /**
      * @test
-     * @group failed
+     * @group ok
      */
     public function sendMissedIdTaskSmsTest()
     {
