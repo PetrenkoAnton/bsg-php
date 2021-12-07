@@ -23,9 +23,9 @@ class ViberApiClientTest extends TestCase
 
     private $viberClient;
 
-    public function __construct() {
-        parent::__construct();
-        $this->viberClient = new ViberApiClient(TestConfig::TEST_API_KEY, TestConfig::VIBER_SENDER_NAME);;
+    public function setUp(): void
+    {
+        $this->viberClient = new ViberApiClient(TestConfig::TEST_API_KEY, TestConfig::VIBER_SENDER_NAME);
     }
 
     /**
@@ -111,7 +111,7 @@ class ViberApiClientTest extends TestCase
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_EXT_ALREADY_EXIST, $answer['result'][1]['error']);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }

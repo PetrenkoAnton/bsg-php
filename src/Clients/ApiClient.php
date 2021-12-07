@@ -7,7 +7,6 @@ class ApiClient {
 
     const API_URL = 'https://api.bsg.hk/v1.0/';
 
-    protected $api_url;
     protected $api_key;
     protected $logger;
 
@@ -43,7 +42,7 @@ class ApiClient {
 			curl_setopt($client, CURLOPT_POSTFIELDS, $post_data);
         $result = curl_exec($client);
         if (!$result) {
-            throw new Exception (curl_error($client), curl_errno($client));
+            throw new \Exception (curl_error($client), curl_errno($client));
         } else
             return $result;
     }
@@ -55,10 +54,10 @@ class ApiClient {
     public function getBalance () {
         try {
             $resp = $this->sendRequest('common/balance');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
             $this->addLog($error);
-            throw new Exception($error, -1);
+            throw new \Exception($error, -1);
         }
         $result = json_decode($resp,true);
         return $result;

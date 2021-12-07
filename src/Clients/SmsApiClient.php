@@ -19,7 +19,7 @@ class SmsApiClient extends ApiClient {
     {
         try {
             $resp = $this->sendRequest($endpoint);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
             return ['error' => $error];
         }
@@ -41,7 +41,7 @@ class SmsApiClient extends ApiClient {
     {
         try {
             $resp = $this->sendRequest('sms/task/' . $task_id);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
             return ['error' => $error];
         }
@@ -53,7 +53,7 @@ class SmsApiClient extends ApiClient {
     {
         try {
             $resp = $this->sendRequest('sms/prices' . ($tariff !== NULL ? ('/' . $tariff) : ''));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
             return ['error' => $error];
         }
@@ -84,7 +84,7 @@ class SmsApiClient extends ApiClient {
         $endpoint = $only_price ? 'sms/price' : 'sms/create';
         try {
             $resp = $this->sendRequest($endpoint,json_encode($message),'PUT');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
             return ['error' => $error];
         }
@@ -122,7 +122,7 @@ class SmsApiClient extends ApiClient {
         $endpoint = $only_price ? 'sms/price' : 'sms/create';
         try {
             $resp = $this->sendRequest($endpoint,json_encode($message),'PUT');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
             return ['error' => $error];
         }
@@ -158,7 +158,7 @@ class SmsApiClient extends ApiClient {
         $endpoint = $only_price ? 'sms/price' : 'sms/create';
         try {
             $resp = $this->sendRequest($endpoint,json_encode($message),'PUT');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $error = 'Request failed (code: ' .$e->getCode() .'): ' . $e->getMessage();
             return ['error' => $error];
         }

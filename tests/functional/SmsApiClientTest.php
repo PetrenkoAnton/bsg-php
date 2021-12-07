@@ -26,8 +26,8 @@ class SmsApiClientTest extends TestCase
 
     private $smsClient;
 
-    public function __construct() {
-        parent::__construct();
+    public function setUp(): void
+    {
         $this->smsClient = new SmsApiClient(TestConfig::TEST_API_KEY, TestConfig::SMS_SENDER_NAME);;
     }
 

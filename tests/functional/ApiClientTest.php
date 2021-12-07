@@ -13,14 +13,14 @@ class ApiClientTest extends TestCase
 
     private $apiClient;
 
-    public function __construct() {
-        parent::__construct();
-        $this->apiClient = new ApiClient(TestConfig::TEST_API_KEY);;
+    public function setUp(): void
+    {
+        $this->apiClient = new ApiClient(TestConfig::TEST_API_KEY);
     }
 
     /**
      * @test
-     * group ok
+     * @group ok
      */
     public function getBalanceTest()
     {

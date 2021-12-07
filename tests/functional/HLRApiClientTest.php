@@ -22,8 +22,8 @@ class HLRApiClientTest extends TestCase
 
     private $hlrClient;
 
-    public function __construct() {
-        parent::__construct();
+    public function setUp(): void
+    {
         $this->hlrClient = new HLRApiClient(TestConfig::TEST_API_KEY);;
     }
 
