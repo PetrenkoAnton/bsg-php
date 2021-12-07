@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
 
+namespace BSG\Tests\functional;
+
+use BSG\Clients\SmsApiClient;
+use BSG\Tests\TestConfig;
 use PHPUnit\Framework\TestCase;
-require_once __DIR__ . "/../../src/BSG/SmsApiClient.php";
-require_once __DIR__ . "/../TestConfig.php";
+
 class SmsApiClientTest extends TestCase
 {
-
     const ERR_NO = 0;
     const ERR_SMS_NOT_FOUND = 20;
     const ERR_WRONG_PHONE_NUM = 21;
@@ -21,14 +24,11 @@ class SmsApiClientTest extends TestCase
     const ERR_PHONE_ALREADY_IN_USE = 31;
     const ERR_WRONG_TARIFF = 6;
 
-
-
     private $smsClient;
 
     public function __construct() {
         parent::__construct();
         $this->smsClient = new SmsApiClient(TestConfig::TEST_API_KEY, TestConfig::SMS_SENDER_NAME);;
-
     }
 
     /**
@@ -51,7 +51,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayHasKey('price', $answer['result']);
             $this->assertArrayHasKey('currency', $answer['result']);
             $this->assertEquals(self::ERR_NO, $answer['result']['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -66,7 +66,7 @@ class SmsApiClientTest extends TestCase
             sleep(5); //wait for creating sms
             $answer = $this->smsClient->getStatusById($answer['result']['id']);
             $this->assertEquals(self::ERR_NO, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -90,7 +90,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_NO, $answer['result'][0]['error']);
             $this->assertEquals(self::ERR_NO, $answer['result'][1]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -106,7 +106,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayNotHasKey('price', $answer['result']);
             $this->assertArrayNotHasKey('currency', $answer['result']);
             $this->assertEquals(self::ERR_WRONG_PHONE_NUM, $answer['result']['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -122,7 +122,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayNotHasKey('price', $answer['result']);
             $this->assertArrayNotHasKey('currency', $answer['result']);
             $this->assertEquals(self::ERR_ABSENT_EXT_ID, $answer['result']['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -139,7 +139,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayNotHasKey('price', $answer['result']);
             $this->assertArrayNotHasKey('currency', $answer['result']);
             $this->assertEquals(self::ERR_EXT_ALREADY_EXIST, $answer['result']['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -155,7 +155,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayNotHasKey('result', $answer);
             $this->assertArrayHasKey('error', $answer);
             $this->assertEquals(self::ERR_WRONG_SENDER, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -170,7 +170,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayNotHasKey('result', $answer);
             $this->assertArrayHasKey('error', $answer);
             $this->assertEquals(self::ERR_WRONG_BODY, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -185,7 +185,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayHasKey('result', $answer);
             $this->assertArrayHasKey('error', $answer['result']);
             $this->assertEquals(self::ERR_WRONG_EXTERNAL_ID, $answer['result']['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -201,7 +201,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayHasKey('result', $answer);
             $this->assertArrayHasKey('error', $answer['result']);
             $this->assertEquals(self::ERR_WRONG_LIFETIME, $answer['result']['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -223,7 +223,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayHasKey('originator', $taskInfo);
             $this->assertArrayHasKey('body', $taskInfo);
             $this->assertArrayHasKey('totalprice', $taskInfo);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -236,7 +236,7 @@ class SmsApiClientTest extends TestCase
             $answer = $this->smsClient->getTaskStatus('wrong status');
             $this->assertArrayHasKey('error', $answer);
             $this->assertEquals(self::ERR_WRONG_TASK_ID, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -249,7 +249,7 @@ class SmsApiClientTest extends TestCase
             $answer = $this->smsClient->getTaskStatus(99999999999);
             $this->assertArrayHasKey('error', $answer);
             $this->assertEquals(self::ERR_TASK_NOT_FOUND, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -262,7 +262,7 @@ class SmsApiClientTest extends TestCase
             $answer = $this->smsClient->sendSmsMulti([]);
             $this->assertArrayHasKey('error', $answer);
             $this->assertEquals(self::ERR_WRONG_PAYLOAD, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -279,7 +279,7 @@ class SmsApiClientTest extends TestCase
             $this->assertArrayHasKey('result', $answer);
             $this->assertArrayHasKey('1', $answer['result']);
             $this->assertEquals(self::ERR_PHONE_ALREADY_IN_USE, $answer['result'][1]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }

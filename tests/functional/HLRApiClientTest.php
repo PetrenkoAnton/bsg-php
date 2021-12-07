@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
+namespace BSG\Tests\functional;
+
+use BSG\Clients\HLRApiClient;
+use BSG\Tests\TestConfig;
 use PHPUnit\Framework\TestCase;
-require_once __DIR__ . "/../../src/BSG/HLRApiClient.php";
-require_once __DIR__ . "/../TestConfig.php";
-
 
 class HLRApiClientTest extends TestCase
 {
@@ -23,7 +25,6 @@ class HLRApiClientTest extends TestCase
     public function __construct() {
         parent::__construct();
         $this->hlrClient = new HLRApiClient(TestConfig::TEST_API_KEY);;
-
     }
 
     /**
@@ -46,7 +47,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_NO, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -65,7 +66,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_EXT_ALREADY_EXIST, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -83,7 +84,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_ABSENT_EXT_ID, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -104,7 +105,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_NO, $answer['result'][0]['error']);
             $this->assertEquals(self::ERR_NO, $answer['result'][1]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -122,7 +123,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_ABSENT_EXT_ID, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -140,7 +141,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_WRONG_TARIFF, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -158,7 +159,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_WRONG_TARIFF, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -176,7 +177,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_WRONG_TARIFF, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -194,7 +195,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_WRONG_PHONE_NUM, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -210,7 +211,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayNotHasKey('total_price', $answer);
             $this->assertArrayNotHasKey('currency', $answer);
             $this->assertEquals(self::ERR_WRONG_PAYLOAD, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -229,7 +230,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
             $this->assertEquals(self::ERR_PHONE_ALREADY_ON_QUERY, $answer['result'][1]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -244,7 +245,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayNotHasKey('total_price', $answer);
             $this->assertArrayNotHasKey('currency', $answer);
             $this->assertEquals(self::ERR_WRONG_EXT_ID, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -258,7 +259,7 @@ class HLRApiClientTest extends TestCase
             $answer = $this->hlrClient->getPrices();
             $this->assertArrayHasKey('prices', $answer);
             $this->assertEquals(self::ERR_NO, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -276,7 +277,7 @@ class HLRApiClientTest extends TestCase
             $this->assertArrayHasKey('brand', $answer);
             $this->assertArrayHasKey('error', $answer);
             $this->assertEquals(self::ERR_NO, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }

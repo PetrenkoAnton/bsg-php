@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+namespace BSG\Tests;
+
 class TestConfig {
     const TEST_API_KEY = 'test_Dr3wNDGR3XVE1oCHeJES';
     const TEST_PHONE_1 = '380501111111';

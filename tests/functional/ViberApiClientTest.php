@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
+namespace BSG\Tests\functional;
+
+use BSG\Clients\ViberApiClient;
+use BSG\Tests\TestConfig;
 use PHPUnit\Framework\TestCase;
-require_once __DIR__ . "/../../src/BSG/ViberApiClient.php";
-require_once __DIR__ . "/../TestConfig.php";
 
 class ViberApiClientTest extends TestCase
 {
@@ -59,7 +62,7 @@ class ViberApiClientTest extends TestCase
             $this->assertArrayHasKey('msisdn', $status);
             $this->assertArrayHasKey('error', $status);
             $this->assertEquals(self::ERR_NO, $status['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -76,7 +79,7 @@ class ViberApiClientTest extends TestCase
             $this->assertArrayHasKey('error', $status);
             $this->assertEquals(self::ERR_VIBER_MESS_NOT_FOUND, $status['error']);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -91,8 +94,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->sendMessages();
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_WRONG_PHONE_NUM, $answer['result'][0]['error']);
-
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -124,7 +126,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->sendMessages();
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_WRONG_PAYLOAD, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -139,7 +141,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->sendMessages();
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_WRONG_SENDER, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -154,7 +156,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->sendMessages();
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_WRONG_BODY, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -168,7 +170,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->getStatusByReference('999996543269999999999');
             $this->assertArrayNotHasKey('result', $answer);
             $this->assertEquals(self::ERR_VIBER_MESS_NOT_FOUND, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -182,7 +184,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->getStatusByReference(0);
             $this->assertArrayNotHasKey('result', $answer);
             $this->assertEquals(self::ERR_VIBER_MESS_NOT_FOUND, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -197,7 +199,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->sendMessages(-100);
             $this->assertArrayNotHasKey('result', $answer);
             $this->assertEquals(self::ERR_WRONG_LIFETIME, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -212,7 +214,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->sendMessages();
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_WRONG_VIBER_OPTIONS, $answer['result'][0]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -228,7 +230,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->sendMessages();
             $this->assertArrayHasKey('result', $answer);
             $this->assertEquals(self::ERR_PHONE_ALREADY_IN_USE, $answer['result'][1]['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }
@@ -242,7 +244,7 @@ class ViberApiClientTest extends TestCase
             $answer = $this->viberClient->getPrices();
             $this->assertArrayHasKey('error', $answer);
             $this->assertArrayHasKey('prices', $answer);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }

@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
+namespace BSG\Tests\functional;
+
+use BSG\Clients\ApiClient;
+use BSG\Tests\TestConfig;
 use PHPUnit\Framework\TestCase;
-require_once __DIR__ . "/../../src/BSG/ApiClient.php";
-require_once __DIR__ . "/../TestConfig.php";
 
 class ApiClientTest extends TestCase
 {
@@ -28,7 +31,7 @@ class ApiClientTest extends TestCase
             $this->assertArrayHasKey('currency', $answer);
             $this->assertArrayHasKey('limit', $answer);
             $this->assertEquals(self::ERR_NO, $answer['error']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
         }
     }

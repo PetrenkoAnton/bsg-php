@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
-require_once 'BSG/SmsApiClient.php';
-require_once 'BSG/HLRApiClient.php';
-require_once 'BSG/ViberApiClient.php';
+namespace BSG;
+
+use BSG\Clients\HLRApiClient;
+use BSG\Clients\SmsApiClient;
+use BSG\Clients\ViberApiClient;
 
 class BSG
 {
@@ -20,24 +23,15 @@ class BSG
         $this->apiSource = $apiSource;
     }
 
-    /**
-     * @return SmsApiClient
-     */
-    public function getSmsClient() {
+    public function getSmsClient(): SmsApiClient {
         return new SmsApiClient($this->apiKey, $this->sender, $this->tariff, $this->apiSource);
     }
 
-    /**
-     * @return HLRApiClient
-     */
-    public function getHLRClient() {
+    public function getHLRClient(): HLRApiClient {
         return new HLRApiClient($this->apiKey, $this->tariff, $this->apiSource);
     }
 
-    /**
-     * @return ViberApiClient
-     */
-    public function getViberClient() {
+    public function getViberClient(): ViberApiClient {
         return new ViberApiClient($this->apiKey, $this->viberSender, $this->apiSource);
     }
 
