@@ -27,6 +27,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function ViberMessNotFoundTest() {
         $answer = $this->viberClient->getStatusById(99999999999);
@@ -35,6 +36,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendSuccessViberTest() {
         try {
@@ -64,6 +66,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function sendWrongStatusViberTest() {
         try {
@@ -80,6 +83,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendWrongNumberViberTest() {
         try {
@@ -95,6 +99,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendAlreadyExistExtViberTest() {
         try {
@@ -111,6 +116,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendInvalidPayloadViberTest() {
         try {
@@ -125,6 +131,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendUnregisteredSenderViberTest() {
         try {
@@ -139,6 +146,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function sendEmtyMsgViberTest() {
         try {
@@ -153,6 +161,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function getWrongReferenceTest() {
         try {
@@ -166,6 +175,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function getWrongReferenceZeroTest() {
         try {
@@ -179,6 +189,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendInvalidLifetimeTest() {
         try {
@@ -193,6 +204,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendWrongViberOptionsTest() {
         try {
@@ -207,6 +219,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendSamePhoneViberTest() {
         try {
@@ -222,6 +235,7 @@ class ViberApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function getPrice() {
         try {

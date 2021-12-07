@@ -33,6 +33,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function SmsNotFoundTest() {
         $answer = $this->smsClient->getStatusById(99999999999);
@@ -41,6 +42,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendSuccessSmsTest() {
         try {
@@ -56,6 +58,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendSuccessSmsStatusTest() {
         try {
@@ -70,13 +73,11 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendSuccessSmsMultiTest() {
         try {
             $answer = $this->smsClient->sendSmsMulti([
-
-
-
                 array (
                     'msisdn' => '333333',
                     'body' => 'Новый статус заказа NSC-29: Принят, ожидается оплата',
@@ -84,8 +85,6 @@ class SmsApiClientTest extends TestCase
                     'originator' => 'testsms',
                 )
             ]);
-            var_dump($answer);
-            die;
             $this->assertArrayHasKey('result', $answer);
             $this->assertArrayHasKey('total_price', $answer);
             $this->assertArrayHasKey('currency', $answer);
@@ -98,6 +97,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendInvalidPhoneSmsTest() {
         try {
@@ -113,6 +113,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendNoExternalSmsTest() {
         try {
@@ -128,6 +129,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendAlreadyExistExtSmsTest() {
         try {
@@ -144,6 +146,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendToBigOriginatorSmsTest() {
         try {
@@ -159,6 +162,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendEmptyBodySmsTest() {
         try {
@@ -173,6 +177,7 @@ class SmsApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendInvalidExtSmsTest() {
         try {

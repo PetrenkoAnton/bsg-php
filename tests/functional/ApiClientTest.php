@@ -17,6 +17,7 @@ class ApiClientTest extends TestCase
 
     /**
      * @test
+     * group ok
      */
     public function getBalanceTest()
     {

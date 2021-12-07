@@ -18,8 +18,6 @@ class HLRApiClientTest extends TestCase
     const ERR_PHONE_ALREADY_ON_QUERY = 66;
     const ERR_WRONG_TARIFF = 6;
 
-
-
     private $hlrClient;
 
     public function __construct() {
@@ -30,6 +28,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function hlrNotFoundTest() {
         $answer = $this->hlrClient->getStatusById(99999999999);
@@ -38,6 +37,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function sendSuccessHLRTest() {
         try {
@@ -53,6 +53,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function HLRsExtAlreadyExistTest() {
         try {
@@ -71,6 +72,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function HLRsExtAbsentTest() {
         try {
@@ -89,6 +91,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function HLRssuccessTest() {
         try {
@@ -108,6 +111,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function HLRsExtAbsentOneMoreTest() {
         try {
@@ -125,6 +129,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function HLRsWrongTariffTest() {
         try {
@@ -142,6 +147,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function HLRsWrongTariffSecondTest() {
         try{
@@ -159,6 +165,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function HLRsWrongTariffThirdTest() {
         try {
@@ -176,6 +183,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function HLRsInvalidMSISDN() {
         try{
@@ -193,6 +201,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function HLRsWrongPayload() {
         try {
@@ -208,6 +217,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group failed
      */
     public function HLRsPhoneAlreadyInRequestTest() {
         try {
@@ -225,6 +235,7 @@ class HLRApiClientTest extends TestCase
     }
     /**
      * @test
+     * @group ok
      */
     public function HLRWrongExternalIdTest() {
         try {
@@ -240,6 +251,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group ok
      */
     public function HLRPricesTest() {
         try {
@@ -253,6 +265,7 @@ class HLRApiClientTest extends TestCase
 
     /**
      * @test
+     * @group invalid
      */
     public function HLRSuccessGetById() {
         try {
