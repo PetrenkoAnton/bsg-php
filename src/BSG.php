@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace BSG;
 
+use BSG\Clients\Contracts\ApiClientContract;
 use BSG\Clients\HLRApiClient;
 use BSG\Clients\SmsApiClient;
 use BSG\Clients\ViberApiClient;
+use http\Exception\RuntimeException;
 
 class BSG
 {
@@ -43,6 +45,25 @@ class BSG
     public function getViberClient(): ViberApiClient
     {
         return new ViberApiClient($this->apiKey, $this->viberSender, $this->apiSource);
+    }
+
+    public function getClient(string $client): ApiClientContract
+    {
+        switch ($client) {
+            case 'sms':
+                $client = $this->getSmsClient();
+                break;
+            case 'hlr':
+                $client = $this->getHLRClient();
+                break;
+            case 'viber':
+                $client = $this->getViberClient();
+                break;
+            default:
+                throw new RuntimeException('Invalid client type');
+        }
+
+        return $client;
     }
 
 }

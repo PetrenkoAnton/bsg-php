@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace BSG\Clients;
 
+use BSG\Clients\Contracts\ApiClientContract;
 use Exception;
 
-class HLRApiClient extends ApiClient
+class HLRApiClient extends ApiClient implements ApiClientContract
 {
     protected ?string $tariff;
 

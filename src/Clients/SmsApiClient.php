@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace BSG\Clients;
 
+use BSG\Clients\Contracts\ApiClientContract;
 use Exception;
 
-class SmsApiClient extends ApiClient
+class SmsApiClient extends ApiClient implements ApiClientContract
 {
     private string $sender;
     private ?string $tariff;
@@ -23,7 +24,7 @@ class SmsApiClient extends ApiClient
         return $this->getStatus('sms/reference/' . $reference);
     }
 
-    public function getStatusById(string $message_id): array
+    public function getStatusById(int $message_id): array
     {
         return $this->getStatus('sms/' . $message_id);
     }

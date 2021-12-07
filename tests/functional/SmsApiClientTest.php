@@ -37,7 +37,7 @@ class SmsApiClientTest extends TestCase
      */
     public function SmsNotFoundTest()
     {
-        $answer = $this->smsClient->getStatusById((string)99999999999);
+        $answer = $this->smsClient->getStatusById(99999999999);
         $this->assertEquals(self::ERR_SMS_NOT_FOUND, $answer['error']);
     }
 
@@ -67,7 +67,7 @@ class SmsApiClientTest extends TestCase
         try {
             $answer = $this->smsClient->sendSms(TestConfig::TEST_PHONE_1, 'test', 'successSend' . (string)time());
             sleep(5); //wait for creating sms
-            $answer = $this->smsClient->getStatusById((string)$answer['result']['id']);
+            $answer = $this->smsClient->getStatusById($answer['result']['id']);
             $this->assertEquals(self::ERR_NO, $answer['error']);
         } catch (Exception $e) {
             $this->failed($e);

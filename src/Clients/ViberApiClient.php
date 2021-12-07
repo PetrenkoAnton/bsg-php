@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace BSG\Clients;
 
+use BSG\Clients\Contracts\ApiClientContract;
 use Exception;
 
-class ViberApiClient extends ApiClient
+class ViberApiClient extends ApiClient implements ApiClientContract
 {
     protected array $messages = [];
     protected string $sender;
