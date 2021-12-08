@@ -1,7 +1,7 @@
 <phpunit>
     <testsuites>
         <testsuite name="bsg">
-            <directory>functional</directory>
+            <directory>tests/functional</directory>
         </testsuite>
     </testsuites>
 </phpunit>

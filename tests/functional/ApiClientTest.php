@@ -1,22 +1,24 @@
 <?php
+declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
-require_once __DIR__ . "/../../src/BSG/ApiClient.php";
-require_once __DIR__ . "/../TestConfig.php";
+namespace BSG\Tests\functional;
+
+use BSG\Clients\ApiClient;
+use Exception;
 
 class ApiClientTest extends TestCase
 {
-    const ERR_NO = 0;
+    private ApiClient $apiClient;
 
-    private $apiClient;
-
-    public function __construct() {
-        parent::__construct();
-        $this->apiClient = new ApiClient(TestConfig::TEST_API_KEY);;
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->apiClient = new ApiClient($this->testApiKey);
     }
 
     /**
      * @test
+     * @group ok
      */
     public function getBalanceTest()
     {
@@ -28,7 +30,7 @@ class ApiClientTest extends TestCase
             $this->assertArrayHasKey('limit', $answer);
             $this->assertEquals(self::ERR_NO, $answer['error']);
         } catch (Exception $e) {
-            $this->fail(TestConfig::EXCEPTION_FAIL . $e->getMessage());
+            $this->failed($e);
         }
     }
 }

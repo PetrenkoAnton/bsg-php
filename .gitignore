@@ -1,6 +1,6 @@
 .idea
+.env
+.phpunit.result.cache
 vendor
-composer.lock
-composer.phar
-phpunit-5.7.14.phar
+_dev
 .DS_Store
